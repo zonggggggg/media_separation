@@ -38,15 +38,15 @@ class Separation():
             vacant_width = height * ratio - width
             width = int(height * ratio)  # update width
 
-        writer_left = cv2.VideoWriter(os.path.join(self.output, video_left), cv2.VideoWriter_fourcc(*"mp4v"), fps,
+        writer_left = cv2.VideoWriter(os.path.join(self.output, video_left), cv2.VideoWriter_fourcc(*'H264'), fps,
                                       (int(width / self.parts_number), height))
-        writer_middle = cv2.VideoWriter(os.path.join(self.output, video_middle), cv2.VideoWriter_fourcc(*"mp4v"), fps,
+        writer_middle = cv2.VideoWriter(os.path.join(self.output, video_middle), cv2.VideoWriter_fourcc(*'H264'), fps,
                                         (int(width / self.parts_number), height))
-        writer_right = cv2.VideoWriter(os.path.join(self.output, video_right), cv2.VideoWriter_fourcc(*"mp4v"), fps,
+        writer_right = cv2.VideoWriter(os.path.join(self.output, video_right), cv2.VideoWriter_fourcc(*'H264'), fps,
                                        (int(width / self.parts_number), height))
 
 
-        # test = cv2.VideoWriter(os.path.join(self.output, "test.mp4"), cv2.VideoWriter_fourcc(*"mp4v"), fps, (2000, 720))
+        # test = cv2.VideoWriter(os.path.join(self.output, "test.mp4"), cv2.VideoWriter_fourcc(*'H264'), fps, (2000, 720))
         with Bar("Separating", fill="█", suffix="%(percent).1f%% - %(eta)ds", max=frame_number) as bar:
             while cap.isOpened():
                 ret, frame = cap.read()
@@ -60,9 +60,9 @@ class Separation():
                     writer_left.write(frame_left)
                     writer_middle.write(frame_middle)
                     writer_right.write(frame_right)
+                    # test.write(cv2.resize(frame_middle, (2000, 720), interpolation=cv2.INTER_AREA))
                     
                     if show:
-                        # test.write(cv2.resize(frame_middle, (2000, 720), interpolation=cv2.INTER_AREA))
                         cv2.imshow(video_left, frame_left)
                         cv2.imshow(video_middle, frame_middle)
                         cv2.imshow(video_right, frame_right)
